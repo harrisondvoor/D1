@@ -34,9 +34,14 @@ def formView():
 def resultView():
     if request.method == "GET":
         inng = request.args.get("ingredient")
-    return inng
-    # Make an API request to Recipe API for the ingredient entered in the form and display the recipe results
 
+    # Make an API request to Recipe API for the ingredient entered in the form and display the recipe results
+    params = {}
+    params["i"] = inng
+    response = requests.get("http://www.recipepuppy.com/api/", params = params)
+    response_json = json.loads(response.text)
+    response_str = str(response_json)
+    return response_str
 
 if __name__ == '__main__':
     app.run(debug=True)
